@@ -11,7 +11,6 @@ public class OrderReceipt {
         StringBuilder output = new StringBuilder();
 
         output.append("======Printing Orders======\n");
-
         output.append(order.getCustomerName());
         output.append(order.getCustomerAddress());
 
@@ -29,8 +28,8 @@ public class OrderReceipt {
         }
 
         output.append("Sales Tax").append('\t').append(totalSalesTax);
-
         output.append("Total Amount").append('\t').append(totalAmount);
+
         return output.toString();
     }
 }
