@@ -1,5 +1,7 @@
 package org.katas.refactoring;
 
+import java.util.List;
+
 public class OrderReceipt {
     private Order order;
 
@@ -14,7 +16,6 @@ public class OrderReceipt {
         output.append(order.getCustomerName());
         output.append(order.getCustomerAddress());
 
-        double totalSalesTax = 0d;
         double totalAmount = 0d;
         for (LineItem lineItem : order.getLineItems()) {
             output.append(lineItem.getDescription()).append('\t');
@@ -23,13 +24,20 @@ public class OrderReceipt {
             output.append(lineItem.getTotalAmount()).append('\n');
 
             double salesTax = lineItem.getTotalAmount() * .10;
-            totalSalesTax += salesTax;
             totalAmount += lineItem.getTotalAmount() + salesTax;
         }
 
-        output.append("Sales Tax").append('\t').append(totalSalesTax);
+        output.append("Sales Tax").append('\t').append(getTotalSalesTax(order.getLineItems()));
         output.append("Total Amount").append('\t').append(totalAmount);
 
         return output.toString();
+    }
+
+    private double getTotalSalesTax(List<LineItem> lineItemList) {
+        return lineItemList.stream()
+                .map(LineItem::getTotalAmount)
+                .map(subTotalAmount -> subTotalAmount * 0.10)
+                .reduce(Double::sum)
+                .orElse(0.0);
     }
 }
