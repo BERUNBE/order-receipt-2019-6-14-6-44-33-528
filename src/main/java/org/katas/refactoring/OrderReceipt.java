@@ -1,7 +1,5 @@
 package org.katas.refactoring;
 
-import java.util.List;
-
 public class OrderReceipt {
     private Order order;
 
